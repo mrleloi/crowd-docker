@@ -1,0 +1,53 @@
+version: '3.4'
+services:
+  crowd-server:
+    image: atlassian/crowd:5.1.3-ubuntu-jdk-11
+    restart: always
+    container_name: crowd-server
+    hostname: crowd
+    environment:
+      JAVA_OPTS: '-javaagent:/atlassian-agent.jar'
+      JVM_MINIMUM_MEMORY: 512m
+      JVM_MAXIMUM_MEMORY: 2048m
+      #   If Use Reverse Proxy Uncomment this Line
+      #ATL_TOMCAT_SCHEME: 'https'
+      #ATL_TOMCAT_SECURE: 'true'
+      #ATL_PROXY_PORT: '443'
+      #ATL_PROXY_NAME: 'crowd.my-site.com'
+    volumes:
+      - crowd-server:/var/atlassian/application-data/crowd
+    #   - ./agent/atlassian-agent.jar:/atlassian-agent.jar:ro
+      - ./atlassian-agent.jar:/atlassian-agent.jar:ro
+      - ./atlassian-extras-3.4.6.jar:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/atlassian-extras-3.4.6.jar:ro
+    networks:
+      - network-bridge
+    depends_on:
+      - postgres
+    ports:
+      - 8089:8095
+
+  postgres:
+     image: postgres:latest
+     container_name: crowd-postgressql
+     environment:
+       PGDATA: /var/lib/postgresql/data/pgdata
+       POSTGRES_DB: crowd
+       POSTGRES_USER: crowd
+       POSTGRES_PASSWORD: 123123
+     volumes:
+       - postgres_data:/var/lib/postgresql/data/pgdata
+     restart: always
+     networks:
+       - network-bridge
+
+networks:
+  network-bridge:
+    driver: bridge
+
+volumes:
+  crowd-server:
+    external: false
+  #mysql_data:
+  #  external: false
+  postgres_data:
+    external: false
