@@ -1,7 +1,8 @@
 version: '3.4'
 services:
   crowd-server:
-    image: atlassian/crowd:5.1.3-ubuntu-jdk-11
+    # image: atlassian/crowd:5.1.3-ubuntu-jdk-11
+    image: atlassian/crowd:latest
     restart: always
     container_name: crowd-server
     hostname: crowd
@@ -16,7 +17,6 @@ services:
       #ATL_PROXY_NAME: 'crowd.my-site.com'
     volumes:
       - crowd-server:/var/atlassian/application-data/crowd
-    #   - ./agent/atlassian-agent.jar:/atlassian-agent.jar:ro
       - ./atlassian-agent.jar:/atlassian-agent.jar:ro
       - ./atlassian-extras-3.4.6.jar:/opt/atlassian/jira/atlassian-jira/WEB-INF/lib/atlassian-extras-3.4.6.jar:ro
     networks:
