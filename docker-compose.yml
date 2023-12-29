@@ -11,10 +11,10 @@ services:
       JVM_MINIMUM_MEMORY: 512m
       JVM_MAXIMUM_MEMORY: 2048m
       #   If Use Reverse Proxy Uncomment this Line
-      #ATL_TOMCAT_SCHEME: 'https'
-      #ATL_TOMCAT_SECURE: 'true'
-      #ATL_PROXY_PORT: '443'
-      #ATL_PROXY_NAME: 'crowd.my-site.com'
+      ATL_TOMCAT_SCHEME: 'https'
+      ATL_TOMCAT_SECURE: 'true'
+      ATL_PROXY_PORT: '443'
+      ATL_PROXY_NAME: 'crowd.baityapp.online'
     volumes:
       - crowd-server:/var/atlassian/application-data/crowd
       - ./atlassian-agent.jar:/atlassian-agent.jar:ro
